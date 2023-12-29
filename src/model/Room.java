@@ -4,13 +4,11 @@ public class Room implements IRoom{
     private String roomNumber;
     private Double price;
     RoomType enumeration;
-    public boolean isFree;
 
     public Room(String roomNumber, Double price, RoomType enumeration) {
         this.roomNumber = roomNumber;
         this.price = price;
         this.enumeration = enumeration;
-        this.isFree = true;
     }
 
     @Override
@@ -26,11 +24,6 @@ public class Room implements IRoom{
     @Override
     public RoomType getRoomType() {
         return enumeration;
-    }
-
-    @Override
-    public boolean isFree() {
-        return isFree;
     }
 
     @Override
