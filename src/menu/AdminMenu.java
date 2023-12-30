@@ -2,6 +2,10 @@ package menu;
 
 
 import api.AdminResource;
+import model.IRoom;
+import model.Room;
+
+import java.util.Scanner;
 
 public class AdminMenu {
     private static AdminMenu reference = new AdminMenu();
@@ -28,5 +32,27 @@ public class AdminMenu {
 
     public void seeAllCustomers(){
         adminResource.displayAllCustomers();
+    }
+
+    public void addARoom(Scanner scanner){
+        IRoom.RoomType rType = IRoom.RoomType.SINGLE;
+        print("Enter Room Number please: ");
+        String roomNumber = scanner.nextLine();
+        print("Enter the price for this room please: ");
+        Double price = scanner.nextDouble();
+        scanner.nextLine();
+        print("Enter Room Type please, Single or Double: ");
+        String roomType = scanner.nextLine();
+        if(roomType.equals("Single")) {
+            rType = IRoom.RoomType.SINGLE;
+        } else if (roomType.equals("Double")) {
+            rType = IRoom.RoomType.DOUBLE;
+        }
+        Room room = new Room(roomNumber, price, rType);
+        adminResource.addRoom(room);
+    }
+
+    public void displayAllRooms() {
+        adminResource.displayAllRooms();
     }
 }

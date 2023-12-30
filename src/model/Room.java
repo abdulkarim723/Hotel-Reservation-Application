@@ -28,6 +28,6 @@ public class Room implements IRoom{
 
     @Override
     public String toString() {
-        return "Room Number: " + roomNumber + " , Price: " + price;
+        return "Room Number: " + roomNumber + " , Price: " + price + " , Room is: " + enumeration;
     }
 }

@@ -13,9 +13,9 @@ public class Main {
             String userInput = scanner.nextLine();
             switch (userInput) {
                 case "1": adminMenu.seeAllCustomers(); break;
-                case "2": break;
+                case "2": adminMenu.displayAllRooms(); break;
                 case "3": break;
-                case "4": break;
+                case "4": adminMenu.addARoom(scanner); break;
                 case "5": return;
             }
             adminMenu.printAdminMenu();

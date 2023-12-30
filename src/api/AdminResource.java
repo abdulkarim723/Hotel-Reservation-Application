@@ -31,8 +31,16 @@ public class AdminResource {
         }
     }
 
+    public void addRoom(IRoom room) {
+        reservationService.addRoom(room);
+    }
+
     public Collection<IRoom> getAllRooms() {
         return reservationService.getRooms();
+    }
+
+    public void displayAllRooms() {
+        reservationService.displayRooms();
     }
 
     public void displayAllReservations() {

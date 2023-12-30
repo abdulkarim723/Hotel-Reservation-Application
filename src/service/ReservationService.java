@@ -41,6 +41,10 @@ public class ReservationService {
         return rooms;
     }
 
+    public void displayRooms() {
+        for(IRoom room : rooms) System.out.println(room.toString());
+    }
+
     public IRoom getARoom(String roomId) {
         for(IRoom room : rooms) {
             if(Objects.equals(room.getRoomNumber(), roomId)) {
