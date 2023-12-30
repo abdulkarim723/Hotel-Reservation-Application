@@ -21,4 +21,18 @@ public class CheckRegex {
         String errorMessage = "Name format is not supported!";
         checkRegexPattern(nameRegex, string, errorMessage);
     }
+
+    public static boolean checkRoomTypeRegexPattern(String string) {
+        String roomTypeRegex = "single|double";
+        Pattern pattern = Pattern.compile(roomTypeRegex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(string);
+        return matcher.matches();
+    }
+
+    public static boolean checkRoomNumberRegexPattern(String string) {
+        String roomTypeRegex = "^0[1-9][0-9]*|[1-9][0-9]*";
+        Pattern pattern = Pattern.compile(roomTypeRegex);
+        Matcher matcher = pattern.matcher(string);
+        return matcher.matches();
+    }
 }

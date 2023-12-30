@@ -2,6 +2,7 @@ package menu;
 
 
 import api.AdminResource;
+import helperClasses.CheckRegex;
 import model.IRoom;
 import model.Room;
 
@@ -38,14 +39,22 @@ public class AdminMenu {
         IRoom.RoomType rType = IRoom.RoomType.SINGLE;
         print("Enter Room Number please: ");
         String roomNumber = scanner.nextLine();
+        if(!CheckRegex.checkRoomNumberRegexPattern(roomNumber)) {
+            print("Invalid Room Number!\n");
+            return;
+        }
         print("Enter the price for this room please: ");
         Double price = scanner.nextDouble();
         scanner.nextLine();
         print("Enter Room Type please, Single or Double: ");
         String roomType = scanner.nextLine();
-        if(roomType.equals("Single")) {
+        if(!CheckRegex.checkRoomTypeRegexPattern(roomType)) {
+            print("Invalid Room Type!\n");
+            return;
+        }
+        if(roomType.equalsIgnoreCase("single")) {
             rType = IRoom.RoomType.SINGLE;
-        } else if (roomType.equals("Double")) {
+        } else if (roomType.equalsIgnoreCase("double")) {
             rType = IRoom.RoomType.DOUBLE;
         }
         Room room = new Room(roomNumber, price, rType);
