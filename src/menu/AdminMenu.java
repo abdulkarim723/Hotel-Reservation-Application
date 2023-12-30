@@ -6,7 +6,9 @@ import helperClasses.CheckRegex;
 import model.IRoom;
 import model.Room;
 
+import javax.swing.*;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class AdminMenu {
     private static AdminMenu reference = new AdminMenu();
@@ -37,6 +39,7 @@ public class AdminMenu {
 
     public void addARoom(Scanner scanner){
         IRoom.RoomType rType = IRoom.RoomType.SINGLE;
+        Double price = 0.0;
         print("Enter Room Number please: ");
         String roomNumber = scanner.nextLine();
         if(!CheckRegex.checkRoomNumberRegexPattern(roomNumber)) {
@@ -44,7 +47,17 @@ public class AdminMenu {
             return;
         }
         print("Enter the price for this room please: ");
-        Double price = scanner.nextDouble();
+        try {
+            price = scanner.nextDouble();
+            if(price<=0) {
+                print("Invalid Price!\n");
+                return;
+            }
+        }
+        catch(InputMismatchException e){
+            print("Invalid Price!");
+            return;
+        }
         scanner.nextLine();
         print("Enter Room Type please, Single or Double: ");
         String roomType = scanner.nextLine();
