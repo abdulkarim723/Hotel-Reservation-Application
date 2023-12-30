@@ -32,20 +32,23 @@ public class Main {
             while (true) {
                 mainMenu.printMainMenu();
                 userInput = scanner.nextLine();
-                if (userInput.equals("1")) {
-
-                } else if (userInput.equals("2")) {
-
-                } else if (userInput.equals("3")) {
-                    mainMenu.createACustomer(scanner);
-                } else if (userInput.equals("4")) {
-                    adminMenu.printAdminMenu();
-                    processAdminMenu();
-                } else if (userInput.equals("5")) {
-                    print("Exit the program!\n");
-                    break;
-                } else {
-                    print("Please enter only a valid number\n");
+                switch (userInput) {
+                    case "1": break;
+                    case "2": break;
+                    case "3":
+                        try {
+                            mainMenu.createACustomer(scanner); break;
+                        } catch (IllegalArgumentException ex) {
+                            print(ex.getLocalizedMessage() + '\n');
+                            break;
+                        }
+                    case "4":
+                        adminMenu.printAdminMenu();
+                        processAdminMenu();
+                        break;
+                    case "5": print("Exit the program!\n"); return;
+                    default:
+                        print("Please enter only a valid number\n");
                 }
             }
         } catch (Exception ex) {

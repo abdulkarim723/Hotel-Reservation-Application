@@ -3,6 +3,9 @@ package menu;
 import api.HotelResource;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainMenu {
     private static MainMenu reference = new MainMenu();
     private MainMenu() {}
@@ -33,6 +36,5 @@ public class MainMenu {
         print("Enter your Email please: ");
         String email = scanner.nextLine();
         hotelResource.createACustomer(email, firstName, lastName);
-        print(hotelResource.getCustomer(email).toString() + '\n');
     }
 }
