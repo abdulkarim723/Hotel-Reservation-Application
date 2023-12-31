@@ -22,7 +22,9 @@ public class AdminMenu {
                                "2. See all Rooms\n" +
                                "3. See all Reservations\n" +
                                "4. Add a Room\n" +
-                               "5. Back to Main Menu\n" +
+                               "5. Remove a Room\n" +
+                               "6. Remove all Rooms\n" +
+                               "7. Back to Main Menu\n" +
                                "User Input: ";
 
     private static void print(String str) {
@@ -72,6 +74,34 @@ public class AdminMenu {
         }
         Room room = new Room(roomNumber, price, rType);
         adminResource.addRoom(room);
+    }
+
+    public void removeARoom(Scanner scanner) {
+        print("Enter Room Number you wish to remove: ");
+        String roomNumber = scanner.nextLine();
+        if(!CheckRegex.checkRoomNumberRegexPattern(roomNumber)) {
+            print("Invalid Room Number!\n");
+            return;
+        }
+
+        if(adminResource.removeARoom(roomNumber)) {
+            print("Room with ID Number " + roomNumber + " is removed successfully!\n");
+            return;
+        }
+
+        print("Error by removing the room with ID Number " + roomNumber + '\n');
+    }
+
+    public void removeAllRooms(Scanner scanner) {
+        print("This may be dangerous, are you sure you want to delete all Rooms? ");
+        String userInput = scanner.nextLine();
+        if(CheckRegex.checkYesOrNo(userInput)) {
+            if (userInput.equalsIgnoreCase("yes")) {
+                adminResource.removeRooms();
+                print("All Rooms are removed successfully!\n");
+            }
+        }
+
     }
 
     public void displayAllRooms() {

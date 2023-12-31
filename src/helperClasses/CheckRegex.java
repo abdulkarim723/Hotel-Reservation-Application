@@ -35,4 +35,11 @@ public class CheckRegex {
         Matcher matcher = pattern.matcher(string);
         return matcher.matches();
     }
+
+    public static boolean checkYesOrNo(String string) {
+        String regexType = "yes|no";
+        Pattern pattern = Pattern.compile(regexType, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(string);
+        return matcher.matches();
+    }
 }

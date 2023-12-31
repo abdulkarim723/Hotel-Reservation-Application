@@ -9,6 +9,7 @@ import java.util.Date;
 import model.Customer;
 import model.IRoom;
 import model.Reservation;
+import model.Room;
 
 
 public class ReservationService {
@@ -38,6 +39,19 @@ public class ReservationService {
             System.out.println("Redundant Rooms are not allowed!");
         }
         rooms.add(room);
+    }
+
+    public boolean removeARoom(String roomNumber) {
+        Room room = (Room) getARoom(roomNumber);
+        if(room != null) {
+            rooms.remove(room);
+            return true;
+        }
+        return false;
+    }
+
+    public void removeAllRooms() {
+        rooms.clear();
     }
 
     public Set<IRoom> getRooms() {

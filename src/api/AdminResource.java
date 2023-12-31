@@ -35,6 +35,14 @@ public class AdminResource {
         reservationService.addRoom(room);
     }
 
+    public boolean removeARoom(String roomNumber) {
+        return reservationService.removeARoom(roomNumber);
+    }
+
+    public void removeRooms() {
+        reservationService.removeAllRooms();
+    }
+
     public Collection<IRoom> getAllRooms() {
         return reservationService.getRooms();
     }

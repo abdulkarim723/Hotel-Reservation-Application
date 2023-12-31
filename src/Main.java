@@ -16,7 +16,9 @@ public class Main {
                 case "2": adminMenu.displayAllRooms(); break;
                 case "3": break;
                 case "4": adminMenu.addARoom(scanner); break;
-                case "5": return;
+                case "5": adminMenu.removeARoom(scanner); break;
+                case "6": adminMenu.removeAllRooms(scanner); break;
+                case "7": return;
             }
             adminMenu.printAdminMenu();
         }
