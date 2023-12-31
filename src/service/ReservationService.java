@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 import java.util.Date;
-import java.util.Iterator;
 
 import model.Customer;
 import model.IRoom;
@@ -32,8 +31,12 @@ public class ReservationService {
         }
         return foundReservations;
     }
-    private final Set<IRoom> rooms = new HashSet<IRoom>();
+    private final Set<IRoom> rooms = new HashSet<>();
+
     public void addRoom(IRoom room) {
+        if(rooms.contains(room)) {
+            System.out.println("Redundant Rooms are not allowed!");
+        }
         rooms.add(room);
     }
 
