@@ -1,9 +1,8 @@
 package service;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Date;
 
 import model.Customer;
@@ -31,19 +30,19 @@ public class ReservationService {
         }
         return foundReservations;
     }
-    private final Set<IRoom> rooms = new HashSet<>();
+    private final Map<String, IRoom> rooms = new HashMap<>();
 
     public void addRoom(IRoom room) {
-        if(rooms.contains(room)) {
+        if(rooms.containsKey(room.getRoomNumber())) {
             System.out.println("Redundant Rooms are not allowed!");
         }
-        rooms.add(room);
+        rooms.put(room.getRoomNumber(), room);
     }
 
     public boolean removeARoom(String roomNumber) {
         Room room = (Room) getARoom(roomNumber);
         if(room != null) {
-            rooms.remove(room);
+            rooms.remove(room.getRoomNumber());
             return true;
         }
         return false;
@@ -53,40 +52,52 @@ public class ReservationService {
         rooms.clear();
     }
 
-    public Set<IRoom> getRooms() {
+    public Map<String, IRoom> getRooms() {
         return rooms;
     }
 
-    public void displayRooms() {
-        for(IRoom room : rooms) System.out.println(room.toString());
+    public void displayAllRooms() {
+        for(Map.Entry<String, IRoom> room : rooms.entrySet()) {
+                System.out.println(room.getValue().toString());
+        }
+    }
+
+    public void displayAvailableRooms() {
+        for(Map.Entry<String, IRoom> room : rooms.entrySet()) {
+            if(!room.getValue().isReserved()) {
+                System.out.println(room.getValue().toString());
+            }
+        }
     }
 
     public IRoom getARoom(String roomId) {
-        for(IRoom room : rooms) {
-            if(Objects.equals(room.getRoomNumber(), roomId)) {
-                return room;
-            }
-        }
+        if(rooms.containsKey(roomId)) return rooms.get(roomId);
         return null;
     }
 
+    public boolean isRoomValid(String roomId) {
+        return rooms.containsKey(roomId);
+    }
+
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
-        for(IRoom item : rooms) {
-            if(item == room) {
-                if(!item.isReserved()) {
-                    return createRoomReservation(customer, room, checkInDate, checkOutDate);
-                } else {
-                    for (Reservation reservation : reservations) {
-                        if(reservation.getRoom().equals(room)) {
-                            if (checkInDate.after(reservation.getCheckInDate()) &&
-                                checkInDate.before(reservation.getCheckOutDate()) ||
-                                checkOutDate.after(reservation.getCheckInDate()) &&
-                                checkOutDate.before(reservation.getCheckOutDate())) {
-                                return null;
-                            }
-                            return createRoomReservation(customer, room, checkInDate, checkOutDate);
-                        }
+        IRoom item = rooms.get(room.getRoomNumber());
+        if(!item.isReserved()) {
+            return createRoomReservation(customer, room, checkInDate, checkOutDate);
+        } else {
+            for (Reservation reservation : reservations) {
+                if(reservation.getRoom().equals(room)) {
+                    if (checkInDate.after(reservation.getCheckInDate()) &&
+                        checkInDate.before(reservation.getCheckOutDate()) ||
+                        checkOutDate.after(reservation.getCheckInDate()) &&
+                        checkOutDate.before(reservation.getCheckOutDate()) ||
+                        checkInDate.before(reservation.getCheckInDate()) &&
+                        checkOutDate.after(reservation.getCheckOutDate()))
+                    {
+                        System.out.println("The Room with ID Number " + room.getRoomNumber() +
+                                " can not be booked at the given time zone!");
+                        return null;
                     }
+                    return createRoomReservation(customer, room, checkInDate, checkOutDate);
                 }
             }
         }

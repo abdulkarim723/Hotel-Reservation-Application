@@ -12,7 +12,7 @@ public class CustomerService {
         this.queuedCustomers = new HashMap<>();
     }
     public void addCustomer(String email, String firstName, String lastName) {
-        if(queuedCustomers.get(email) == null){
+        if(!isCustomerValid(email)){
             Customer customer = new Customer(firstName, lastName, email);
             queuedCustomers.put(email, customer);
             return;
@@ -20,6 +20,10 @@ public class CustomerService {
 
         System.out.println("This customer is already inserted!\n" +
                 "It is not allowed to have more than one account for the same Email");
+    }
+
+    public boolean isCustomerValid(String email) {
+        return queuedCustomers.containsKey(email);
     }
 
     public Customer getCustomer(String customerEmail) {

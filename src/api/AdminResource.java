@@ -6,8 +6,7 @@ import service.CustomerService;
 import service.ReservationService;
 
 import java.util.List;
-import java.awt.*;
-import java.util.Collection;
+import java.util.Map;
 
 public class AdminResource {
     private static AdminResource reference = new AdminResource();
@@ -43,12 +42,12 @@ public class AdminResource {
         reservationService.removeAllRooms();
     }
 
-    public Collection<IRoom> getAllRooms() {
+    public Map<String, IRoom> getAllRooms() {
         return reservationService.getRooms();
     }
 
     public void displayAllRooms() {
-        reservationService.displayRooms();
+        reservationService.displayAllRooms();
     }
 
     public void displayAllReservations() {

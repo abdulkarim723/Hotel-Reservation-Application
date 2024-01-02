@@ -29,8 +29,20 @@ public class HotelResource {
         customerService.addCustomer(email, firstName, lastName);
     }
 
+    public boolean isCustomerValid(String email) {
+        return customerService.isCustomerValid(email);
+    }
+
     public IRoom getRoom(String roomNumber) {
         return reservationService.getARoom(roomNumber);
+    }
+
+    public boolean isRoomValid(String roomId) {
+        return reservationService.isRoomValid(roomId);
+    }
+
+    public void displayAvailableRooms() {
+        reservationService.displayAvailableRooms();
     }
 
     public void displayRooms() {

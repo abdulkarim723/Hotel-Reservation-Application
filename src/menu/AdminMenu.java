@@ -107,4 +107,8 @@ public class AdminMenu {
     public void displayAllRooms() {
         adminResource.displayAllRooms();
     }
+
+    public void seeAllReservations() {
+        adminResource.displayAllReservations();
+    }
 }
