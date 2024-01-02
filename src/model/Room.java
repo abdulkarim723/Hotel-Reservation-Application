@@ -6,6 +6,7 @@ public class Room implements IRoom{
     private String roomNumber;
     private Double price;
     RoomType enumeration;
+    boolean isReserved = false;
 
     public Room(String roomNumber, Double price, RoomType enumeration) {
         this.roomNumber = roomNumber;
@@ -31,6 +32,21 @@ public class Room implements IRoom{
     @Override
     public String toString() {
         return "Room Number: " + roomNumber + " , Price: " + price + " , Room is: " + enumeration;
+    }
+
+    @Override
+    public boolean isReserved() {
+        return isReserved;
+    }
+
+    @Override
+    public void setReservation() {
+        isReserved = true;
+    }
+
+    @Override
+    public void removeReservation() {
+        isReserved = false;
     }
 
     @Override

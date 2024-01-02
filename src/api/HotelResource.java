@@ -33,15 +33,15 @@ public class HotelResource {
         return reservationService.getARoom(roomNumber);
     }
 
+    public void displayRooms() {
+
+    }
+
     public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
         return reservationService.reserveARoom(customerService.getCustomer(customerEmail), room, checkInDate, checkOutDate);
     }
 
     public Collection<Reservation> getCustomerReservations(String customerEmail) {
         return reservationService.getCustomerReservation(customerService.getCustomer(customerEmail));
-    }
-
-    public Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) {
-        return reservationService.findRooms(checkInDate, checkOutDate);
     }
 }

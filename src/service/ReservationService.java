@@ -21,7 +21,6 @@ public class ReservationService {
     }
 
     private final Queue<Reservation> reservations = new LinkedList<Reservation>();
-    private Set<IRoom> foundRooms = new HashSet<IRoom>();
 
     public Queue<Reservation> getCustomerReservation(Customer customer) {
         Queue<Reservation> foundReservations = new LinkedList<Reservation>();
@@ -72,29 +71,33 @@ public class ReservationService {
     }
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
-        Set<IRoom> rooms = findRooms(checkInDate, checkOutDate);
-        for(IRoom oneRoom : rooms) {
-            if(oneRoom == room) {
-                Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
-                reservations.add(reservation);
-                return reservation;
+        for(IRoom item : rooms) {
+            if(item == room) {
+                if(!item.isReserved()) {
+                    return createRoomReservation(customer, room, checkInDate, checkOutDate);
+                } else {
+                    for (Reservation reservation : reservations) {
+                        if(reservation.getRoom().equals(room)) {
+                            if (checkInDate.after(reservation.getCheckInDate()) &&
+                                checkInDate.before(reservation.getCheckOutDate()) ||
+                                checkOutDate.after(reservation.getCheckInDate()) &&
+                                checkOutDate.before(reservation.getCheckOutDate())) {
+                                return null;
+                            }
+                            return createRoomReservation(customer, room, checkInDate, checkOutDate);
+                        }
+                    }
+                }
             }
         }
         return null;
     }
 
-    // find available rooms
-    public Set<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        for(Reservation reservation : reservations) {
-            if(checkInDate.after(reservation.getCheckInDate()) && checkInDate.before(reservation.getCheckOutDate())) {
-                continue;
-            }
-            if(checkOutDate.before(checkInDate)) {
-                throw new IllegalArgumentException("check-out date should be after check-in date");
-            }
-            foundRooms.add(reservation.getRoom());
-        }
-        return foundRooms;
+    private Reservation createRoomReservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+        Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
+        room.setReservation();
+        reservations.add(reservation);
+        return reservation;
     }
 
     public void printAllReservations(){
