@@ -5,8 +5,10 @@ import helperClasses.CheckRegex;
 import helperClasses.Dates;
 import model.Reservation;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.Set;
 
 public class MainMenu {
     private static MainMenu reference = new MainMenu();
@@ -71,11 +73,30 @@ public class MainMenu {
         Date checkInDate = Dates.readDate(scanner, "Enter Check-In date please, Format: dd/mm/yyyy , Example: 31/01/2024\n" +
                 "User Input: ");
         if(checkInDate == null) return;
-        Date checkOutDate = Dates.readDate(scanner, "Enter Check-In date please, Format: dd/mm/yyyy , Example: 31/01/2024\n" +
+        Date checkOutDate = Dates.readDate(scanner, "Enter Check-Out date please, Format: dd/mm/yyyy , Example: 31/01/2024\n" +
                 "User Input: ");
         if(checkOutDate == null) return;
 
         hotelResource.bookARoom(email, hotelResource.getRoom(roomID), checkInDate, checkOutDate);
 
+    }
+
+    public void seeMyReservations(Scanner scanner) {
+        print("Enter your Email please: ");
+        String email = scanner.nextLine();
+        try {
+            CheckRegex.checkEmailRegexPattern(email);
+        } catch (IllegalArgumentException ex) {
+            print(ex.getLocalizedMessage() + '\n');
+            return;
+        }
+        if(!hotelResource.isCustomerValid(email)) {
+            print("Please enter a valid Email\n");
+            return;
+        }
+
+        Collection<Reservation> foundReservations = hotelResource.getCustomerReservations(email);
+        for(Reservation reservation : foundReservations) print(reservation.toString());
+        print("\n");
     }
 }

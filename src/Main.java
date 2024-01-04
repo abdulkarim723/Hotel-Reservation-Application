@@ -36,7 +36,7 @@ public class Main {
                 userInput = scanner.nextLine();
                 switch (userInput) {
                     case "1": mainMenu.bookARoom(scanner); break;
-                    case "2": break;
+                    case "2": mainMenu.seeMyReservations(scanner); break;
                     case "3":
                         try {
                             mainMenu.createACustomer(scanner); break;

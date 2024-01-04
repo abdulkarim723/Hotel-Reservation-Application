@@ -1,9 +1,5 @@
 package service;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Date;
+import java.util.*;
 
 import model.Customer;
 import model.IRoom;
@@ -19,10 +15,10 @@ public class ReservationService {
         return reference;
     }
 
-    private final Queue<Reservation> reservations = new LinkedList<Reservation>();
+    private final Set<Reservation> reservations = new HashSet<>();
 
-    public Queue<Reservation> getCustomerReservation(Customer customer) {
-        Queue<Reservation> foundReservations = new LinkedList<Reservation>();
+    public Set<Reservation> getCustomerReservations(Customer customer) {
+        Set<Reservation> foundReservations = new HashSet<>();
         for(Reservation reservation : reservations) {
             if(reservation.getCustomer() == customer) {
                 foundReservations.add(reservation);
@@ -80,6 +76,10 @@ public class ReservationService {
     }
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+        if(checkInDate.equals(checkOutDate) || checkInDate.after(checkOutDate)) {
+            System.out.println("Please check the Dates you inserted, invalid Input!");
+            return null;
+        }
         IRoom item = rooms.get(room.getRoomNumber());
         if(!item.isReserved()) {
             return createRoomReservation(customer, room, checkInDate, checkOutDate);

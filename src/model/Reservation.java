@@ -1,4 +1,6 @@
 package model;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAdjuster;
 import java.util.Date;
 import java.util.Objects;
 

@@ -54,6 +54,6 @@ public class HotelResource {
     }
 
     public Collection<Reservation> getCustomerReservations(String customerEmail) {
-        return reservationService.getCustomerReservation(customerService.getCustomer(customerEmail));
+        return reservationService.getCustomerReservations(customerService.getCustomer(customerEmail));
     }
 }
