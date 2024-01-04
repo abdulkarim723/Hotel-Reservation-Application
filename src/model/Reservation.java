@@ -1,6 +1,5 @@
 package model;
-import java.time.LocalTime;
-import java.time.temporal.TemporalAdjuster;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -10,6 +9,7 @@ public class Reservation {
     private Date checkInDate;
     private Date checkOutDate;
 
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
     public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         this.customer = customer;
         this.room = room;
@@ -33,8 +33,8 @@ public class Reservation {
     }
     @Override
     public String toString() {
-        return customer.toString() + '\n' + room.toString() + "\ncheck-in date: " + checkInDate
-                + "\ncheck-out date: " + checkOutDate;
+        return customer.toString() + '\n' + room.toString() + "\ncheck-in date: " + dateFormatter.format(checkInDate) + " at 15:00 pm"
+                + "\ncheck-out date: " + dateFormatter.format(checkOutDate) + " at 12:00 pm";
     }
 
     @Override
