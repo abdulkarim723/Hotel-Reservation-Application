@@ -9,7 +9,7 @@ import model.Room;
 
 public class ReservationService {
 
-    private static ReservationService reference = new ReservationService();
+    private static final ReservationService reference = new ReservationService();
     private ReservationService() {}
     public static ReservationService getInstance() {
         return reference;

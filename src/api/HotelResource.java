@@ -46,7 +46,7 @@ public class HotelResource {
     }
 
     public void displayRooms() {
-
+        reservationService.displayAllRooms();
     }
 
     public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {

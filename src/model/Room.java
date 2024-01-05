@@ -3,8 +3,8 @@ package model;
 import java.util.Objects;
 
 public class Room implements IRoom{
-    private String roomNumber;
-    private Double price;
+    private final String roomNumber;
+    private final Double price;
     RoomType enumeration;
     boolean isReserved = false;
 

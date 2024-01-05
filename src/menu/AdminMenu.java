@@ -11,14 +11,14 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class AdminMenu {
-    private static AdminMenu reference = new AdminMenu();
-    private static AdminResource adminResource = AdminResource.getInstance();
+    private static final AdminMenu reference = new AdminMenu();
+    private static final AdminResource adminResource = AdminResource.getInstance();
     private AdminMenu() {}
     public static AdminMenu getInstance() {
         return reference;
     }
 
-    private String adminMenu = "1. See all Customers\n" +
+    private final String adminMenu = "1. See all Customers\n" +
                                "2. See all Rooms\n" +
                                "3. See all Reservations\n" +
                                "4. Add a Room\n" +

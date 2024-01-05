@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class MainMenu {
-    private static MainMenu reference = new MainMenu();
+    private static final MainMenu reference = new MainMenu();
     private MainMenu() {}
     public static MainMenu getInstance() {
         return reference;
@@ -56,17 +56,13 @@ public class MainMenu {
             return;
         }
         print("Please choose a Room you want to book\n");
-        hotelResource.displayAvailableRooms();
+        hotelResource.displayRooms();
         print("Please insert the Room ID you want to book: ");
         String roomID = scanner.nextLine();
         try {
             CheckRegex.checkRoomNumberRegexPattern(roomID);
         } catch (IllegalArgumentException ex) {
             print("Please enter a valid Room ID\n");
-            return;
-        }
-        if(!hotelResource.isRoomValid(roomID)) {
-            print("Invalid Room ID!");
             return;
         }
 
