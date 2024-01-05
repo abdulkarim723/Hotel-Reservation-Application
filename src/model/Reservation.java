@@ -42,11 +42,14 @@ public class Reservation {
         if(this == o) return true;
         if(o == null || getClass() != o.getClass()) return false;
         Reservation reservation = (Reservation) o;
-        return room.equals(reservation.getRoom());
+        return room.equals(reservation.getRoom())
+            && customer.equals(reservation.getCustomer())
+            && checkInDate.equals(reservation.getCheckInDate())
+            && checkOutDate.equals(reservation.checkOutDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(room);
+        return Objects.hash(room) * Objects.hash(customer) * Objects.hash(checkInDate) * Objects.hash(checkOutDate);
     }
 }
