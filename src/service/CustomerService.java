@@ -11,15 +11,14 @@ public class CustomerService {
     private CustomerService(){
         this.queuedCustomers = new HashMap<>();
     }
-    public void addCustomer(String email, String firstName, String lastName) {
+    public boolean addCustomer(String email, String firstName, String lastName) {
         if(!isCustomerValid(email)){
             Customer customer = new Customer(firstName, lastName, email);
             queuedCustomers.put(email, customer);
-            return;
+            return true;
         }
 
-        System.out.println("This customer is already inserted!\n" +
-                "It is not allowed to have more than one account for the same Email");
+        return false;
     }
 
     public boolean isCustomerValid(String email) {
@@ -28,11 +27,6 @@ public class CustomerService {
 
     public Customer getCustomer(String customerEmail) {
         return queuedCustomers.get(customerEmail);
-    }
-
-
-    public Map<String, Customer> getAllCustomers() {
-        return queuedCustomers;
     }
 
     public void printAllCustomers() {

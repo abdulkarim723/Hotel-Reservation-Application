@@ -33,7 +33,7 @@ public class Reservation {
     }
     @Override
     public String toString() {
-        return customer.toString() + '\n' + room.toString() + "\ncheck-in date: " + dateFormatter.format(checkInDate) + " at 15:00 pm"
+        return room.toString() + "\ncheck-in date: " + dateFormatter.format(checkInDate) + " at 15:00 pm"
                 + "\ncheck-out date: " + dateFormatter.format(checkOutDate) + " at 12:00 pm";
     }
 

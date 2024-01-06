@@ -3,7 +3,7 @@ import menu.MainMenu;
 
 import java.util.Scanner;
 
-public class Main {
+public class HotelApplication {
     private static void print(String str) {
         System.out.print(str);
     }
@@ -24,13 +24,12 @@ public class Main {
         }
 
     }
-    private static Scanner scanner = new Scanner(System.in);
-    private static AdminMenu adminMenu = AdminMenu.getInstance();
-    private static MainMenu mainMenu = MainMenu.getInstance();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final AdminMenu adminMenu = AdminMenu.getInstance();
+    private static final MainMenu mainMenu = MainMenu.getInstance();
     public static void main(String[] args) {
         String userInput;
         try {
-            //noinspection InfiniteLoopStatement
             while (true) {
                 mainMenu.printMainMenu();
                 userInput = scanner.nextLine();

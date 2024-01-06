@@ -7,9 +7,10 @@ import service.CustomerService;
 import service.ReservationService;
 import java.util.Date;
 import java.util.Collection;
+import java.util.Map;
 
 public class HotelResource {
-    private static HotelResource reference = new HotelResource();
+    private static final HotelResource reference = new HotelResource();
     private static CustomerService customerService;
     private static ReservationService reservationService;
     public static HotelResource getInstance() {
@@ -25,8 +26,8 @@ public class HotelResource {
         return customerService.getCustomer(email);
     }
 
-    public void createACustomer(String email, String firstName, String lastName) {
-        customerService.addCustomer(email, firstName, lastName);
+    public boolean createACustomer(String email, String firstName, String lastName) {
+        return customerService.addCustomer(email, firstName, lastName);
     }
 
     public boolean isCustomerValid(String email) {
@@ -41,8 +42,8 @@ public class HotelResource {
         return reservationService.isRoomValid(roomId);
     }
 
-    public void displayAvailableRooms() {
-        reservationService.displayAvailableRooms();
+    public Map<String, IRoom> getAvailableRooms(Date checkInDate, Date checkOutDate) {
+        return reservationService.getAvailableRooms(checkInDate, checkOutDate);
     }
 
     public void displayRooms() {

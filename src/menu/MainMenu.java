@@ -3,12 +3,10 @@ package menu;
 import api.HotelResource;
 import helperClasses.CheckRegex;
 import helperClasses.Dates;
+import model.IRoom;
 import model.Reservation;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class MainMenu {
     private static final MainMenu reference = new MainMenu();
@@ -39,7 +37,12 @@ public class MainMenu {
         String lastName = scanner.nextLine();
         print("Enter your Email please: ");
         String email = scanner.nextLine();
-        hotelResource.createACustomer(email, firstName, lastName);
+        if(!hotelResource.createACustomer(email, firstName, lastName)) {
+            print("This customer is already inserted!\n" +
+                    "It is not allowed to have more than one account for the same Email\n");
+            return;
+        }
+        print("Account successfully created ..\n" + hotelResource.getCustomer(email).toString() + '\n');
     }
 
     public void bookARoom(Scanner scanner) {
@@ -55,16 +58,6 @@ public class MainMenu {
             print("Please enter a valid Email\n");
             return;
         }
-        print("Please choose a Room you want to book\n");
-        hotelResource.displayRooms();
-        print("Please insert the Room ID you want to book: ");
-        String roomID = scanner.nextLine();
-        try {
-            CheckRegex.checkRoomNumberRegexPattern(roomID);
-        } catch (IllegalArgumentException ex) {
-            print("Please enter a valid Room ID\n");
-            return;
-        }
 
         Date checkInDate = Dates.readDate(scanner, "Enter Check-In date please, Format: dd/mm/yyyy , Example: 31/01/2024\n" +
                 "User Input: ");
@@ -73,8 +66,26 @@ public class MainMenu {
                 "User Input: ");
         if(checkOutDate == null) return;
 
-        hotelResource.bookARoom(email, hotelResource.getRoom(roomID), checkInDate, checkOutDate);
+        Map<String, IRoom> rooms = hotelResource.getAvailableRooms(checkInDate, checkOutDate);
+        if(rooms.isEmpty()) {
+            print("For the given Check-In and Check-Out dates there are no available Rooms unfortunately\n");
+            return;
+        }
+        print("Available Rooms are:\n");
+        for(Map.Entry<String, IRoom> availableRoom : rooms.entrySet()) print(availableRoom.getValue().toString());
+        print("\nPlease insert the Room ID you want to book: ");
+        String roomID = scanner.nextLine();
+        try {
+            CheckRegex.checkRoomNumberRegexPattern(roomID);
+        } catch (IllegalArgumentException ex) {
+            print("Please enter a valid Room ID\n");
+            return;
+        }
 
+        Reservation reservation = hotelResource.bookARoom(email, hotelResource.getRoom(roomID), checkInDate, checkOutDate);
+        if(reservation != null) {
+            print("Successfully created the following Reservation:\n" + reservation + '\n');
+        }
     }
 
     public void seeMyReservations(Scanner scanner) {
@@ -92,6 +103,7 @@ public class MainMenu {
         }
 
         Collection<Reservation> foundReservations = hotelResource.getCustomerReservations(email);
+        print(hotelResource.getCustomer(email).toString());
         for(Reservation reservation : foundReservations) print(reservation.toString());
         print("\n");
     }
