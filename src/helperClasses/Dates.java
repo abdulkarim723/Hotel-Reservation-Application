@@ -1,6 +1,7 @@
 package helperClasses;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -26,5 +27,17 @@ public class Dates {
         }
 
         return formattedDate;
+    }
+
+    public static Date getDateAfterNDays(Date date, int numberOfShiftedDays) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DAY_OF_YEAR, numberOfShiftedDays);
+        return c.getTime();
+    }
+
+    public static String getFormattedDateAsString(Date date) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+        return dateFormatter.format(date);
     }
 }

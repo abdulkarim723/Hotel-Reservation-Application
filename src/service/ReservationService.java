@@ -77,13 +77,15 @@ public class ReservationService {
         return rooms.containsKey(roomId);
     }
 
-    private boolean isRoomAvailable(Date checkInDate, Date checkOutDate, Reservation reservation) {
+    private boolean isRoomBusy(Date checkInDate, Date checkOutDate, Reservation reservation) {
         return checkInDate.after(reservation.getCheckInDate()) &&
                checkInDate.before(reservation.getCheckOutDate()) ||
                checkOutDate.after(reservation.getCheckInDate()) &&
                checkOutDate.before(reservation.getCheckOutDate()) ||
                checkInDate.before(reservation.getCheckInDate()) &&
-               checkOutDate.after(reservation.getCheckOutDate());
+               checkOutDate.after(reservation.getCheckOutDate()) ||
+               checkInDate.equals(reservation.getCheckInDate()) ||
+               checkOutDate.equals(reservation.getCheckOutDate());
     }
 
     boolean checkRoomAvailability(Date checkInDate, Date checkOutDate, IRoom room) {
@@ -97,7 +99,7 @@ public class ReservationService {
         } else {
             for (Reservation reservation : reservations) {
                 if(reservation.getRoom().equals(room)) {
-                    if (!isRoomAvailable(checkInDate, checkOutDate, reservation))
+                    if (isRoomBusy(checkInDate, checkOutDate, reservation))
                     {
                         System.out.println("The Room with ID Number " + room.getRoomNumber() +
                                 " can not be booked at the given time zone!");
@@ -127,7 +129,7 @@ public class ReservationService {
         } else {
             for (Reservation reservation : reservations) {
                 if(reservation.getRoom().equals(room)) {
-                    if (!isRoomAvailable(checkInDate, checkOutDate, reservation))
+                    if (isRoomBusy(checkInDate, checkOutDate, reservation))
                     {
                         System.out.println("The Room with ID Number " + room.getRoomNumber() +
                                 " can not be booked at the given time zone!");
