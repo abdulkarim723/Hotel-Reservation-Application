@@ -1,10 +1,8 @@
 package helperClasses;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.TimeZone;
 
 public class Dates {
     public static Date getCurrentDate() {
@@ -21,6 +19,12 @@ public class Dates {
             System.out.println("Invalid Date format\n");
             return null;
         }
+
+        if(formattedDate.before(Dates.getCurrentDate())) {
+            System.out.println("The given date is not allowed as it is a date in the past!");
+            return null;
+        }
+
         return formattedDate;
     }
 }
